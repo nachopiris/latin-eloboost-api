@@ -3,10 +3,6 @@ const axios = require("axios");
 
 const apiKey = "RGAPI-efe22849-6d74-425b-b62c-036cdb010878";
 
-server.get("/", (req, res) => {
-  res.send("holaaaaa");
-});
-
 server.post("/", (req, res) => {
   const { name, server } = req.body;
   axios

@@ -75,14 +75,18 @@ class PaymentService {
       },
       back_urls: {
         // declaramos las urls de redireccionamiento
-        success: "http://localhost:3001/success",
+        success:
+          "https://latin-eloboost-api.herokuapp.com/api/redirect/success",
         // url a la que va a redireccionar si sale todo bien
-        pending: "http://localhost:3001/pending",
+        pending:
+          "https://latin-eloboost-api.herokuapp.com/api/redirect/pending",
         // url a la que va a redireccionar si decide pagar en efectivo por ejemplo
-        failure: "http://localhost:3001/fail",
+        failure:
+          "https://latin-eloboost-api.herokuapp.com/api/redirect/failure",
         // url a la que va a redireccionar si falla el pago
       },
-      notification_url: "http://localhost:3001/webhook",
+      notification_url:
+        "https://latin-eloboost-api.herokuapp.com/api/mercadopago/webhook",
       // declaramos nuestra url donde recibiremos las notificaciones
       // es la misma ruta que declaramos en app.js
       auto_return: "approved",
