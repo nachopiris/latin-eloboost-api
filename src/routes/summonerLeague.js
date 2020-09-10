@@ -1,7 +1,7 @@
 const server = require("express").Router();
 const axios = require("axios");
 
-const apiKey = "RGAPI-4d70d298-a19d-42ae-83ab-647cf220f34d";
+const apiKey = "RGAPI-efe22849-6d74-425b-b62c-036cdb010878";
 
 server.get("/", (req, res) => {
   res.send("holaaaaa");
