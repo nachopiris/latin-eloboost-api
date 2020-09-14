@@ -4,13 +4,24 @@ class PaymentController {
   }
 
   async getMercadoPagoLink(req, res) {
-    const { section, description, price, unit } = req.body;
+    const {
+      productName,
+      productDescription,
+      price,
+      unit,
+      firstName,
+      lastName,
+      email,
+    } = req.body;
     try {
       const checkout = await this.paymentService.createPaymentMercadoPago(
-        section,
-        description,
+        productName,
+        productDescription,
         price,
-        unit
+        unit,
+        firstName,
+        lastName,
+        email
       );
 
       return res.json({ url: checkout.init_point });

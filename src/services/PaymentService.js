@@ -14,16 +14,22 @@ class PaymentService {
     // declaramos la url en el constructor para poder accederla a lo largo de toda la class
   }
 
-  async createPaymentMercadoPago(section, description, price, unit) {
+  async createPaymentMercadoPago(
+    productName,
+    productDescription,
+    price,
+    unit,
+    firstName,
+    lastName,
+    email
+  ) {
     const url = `${this.mercadoPagoUrl}/preferences?access_token=${this.tokensMercadoPago.test.access_token}`;
 
     const items = [
       {
-        id: "1234",
-        title: section,
-        description: description,
+        title: productName,
+        description: productDescription,
         picture_url: "https://elo-boost.net/_nuxt/img/silver_4.b1dd678.png",
-        category_id: "1234",
         quantity: parseInt(unit),
         currency_id: "ARS",
         unit_price: parseFloat(price),
@@ -38,9 +44,9 @@ class PaymentService {
       payer: {
         // información del comprador, si estan en producción tienen que traerlos del request
         //(al igual que hicimos con el precio del item)
-        name: "Lalo",
-        surname: "Landa",
-        email: "test_user_101140854@testuser.com",
+        name: firstName,
+        surname: lastName,
+        email: email,
         // si estan en sandbox, aca tienen que poner el email de SU usuario de prueba si estan
         //en producción, deberian completar esta información
         //de la misma manera que lo hicimos con items, units, y price
