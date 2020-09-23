@@ -1,9 +1,11 @@
-const server = require("express").Router();
+const { Router } = require("express");
 const axios = require("axios");
 
-const apiKey = "RGAPI-f975484e-290b-42ed-9163-f6de883f91dd";
+const router = Router();
 
-server.post("/", (req, res) => {
+const apiKey = "RGAPI-537a84bc-06bb-4430-9557-066ebb44bb85";
+
+router.post("/", (req, res) => {
   const { name, server } = req.body;
   axios
     .get(
@@ -38,4 +40,4 @@ server.post("/", (req, res) => {
     });
 });
 
-module.exports = server;
+module.exports = router;
