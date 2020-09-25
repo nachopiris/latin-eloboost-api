@@ -41,10 +41,10 @@ router.post("/payment/new", (req, res) => {
     .create(preference)
     .then((response) => {
       const url = response.body.init_point;
-      console.log(url);
+      res.send(url).status(200);
     })
     .catch((error) => {
-      console.log(error);
+      res.send(error).status(500);
     });
 });
 
