@@ -5,7 +5,7 @@ const router = Router();
 
 mercadopago.configure({
   access_token:
-    "TEST-1520402290814953-092000-9711550a934ab2e34bacf7346ff23d3a-199025745",
+    "APP_USR-1473567962389678-092515-3ae6ae1cfb6a00ff49005474c76e49ca-197123651",
 });
 
 router.post("/payment/new", (req, res) => {
@@ -33,10 +33,10 @@ router.post("/payment/new", (req, res) => {
     .create(preference)
     .then((response) => {
       const url = response.body.init_point;
-      res.send(url).status(200);
+      console.log(url);
     })
     .catch((error) => {
-      res.send(error).status(500);
+      console.log(error);
     });
 });
 

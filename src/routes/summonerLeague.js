@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const router = Router();
 
-const apiKey = "RGAPI-537a84bc-06bb-4430-9557-066ebb44bb85";
+const apiKey = "RGAPI-257cbab5-b4dd-44e7-8217-edad76e34ad2";
 
 router.post("/", (req, res) => {
   const { name, server } = req.body;
