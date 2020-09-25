@@ -9,11 +9,20 @@ mercadopago.configure({
 });
 
 router.post("/payment/new", (req, res) => {
-  const { productName, price, unit, firstName, lastName, email } = req.body;
+  const {
+    productName,
+    productDescription,
+    price,
+    unit,
+    firstName,
+    lastName,
+    email,
+  } = req.body;
   let preference = {
     items: [
       {
         title: productName,
+        description: productDescription,
         unit_price: parseFloat(price),
         quantity: parseInt(unit),
       },
@@ -22,7 +31,6 @@ router.post("/payment/new", (req, res) => {
       name: firstName,
       surname: lastName,
       email: email,
-      date_created: Date.now(),
       phone: {},
       identification: {},
       address: {},
