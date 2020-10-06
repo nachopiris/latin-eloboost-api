@@ -50,11 +50,10 @@ router.put("/update", (req, res) => {
     )
     .then(async (response) => {
       const payment = response.data;
-      const updatedOrder = await Order.findOneAndUpdate(
-        { id: payment.external_reference },
-        { status: payment.status }
-      );
-      console.log(updatedOrder);
+      console.log(payment);
+      const updatedOrder = await Order.findByIdAndUpdate(paymentId, {
+        status: payment.status,
+      });
       res.sendStatus(200);
     });
 });
