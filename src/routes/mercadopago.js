@@ -48,8 +48,8 @@ router.post("/payment/new", (req, res) => {
   mercadopago.preferences
     .create(preference)
     .then((response) => {
-      const init_point = response.body.init_point;
-      res.send(init_point).status(200);
+      const prefId = response.body.id;
+      res.send(prefId).status(200);
     })
     .catch((error) => {
       res.send(error).status(500);
