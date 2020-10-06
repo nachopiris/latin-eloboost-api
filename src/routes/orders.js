@@ -42,7 +42,7 @@ router.post("/create", async (req, res) => {
 });
 
 router.put("/update", (req, res) => {
-  const paymentId = req.body;
+  const { paymentId } = req.body;
 
   axios
     .get(
