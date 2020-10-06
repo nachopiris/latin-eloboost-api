@@ -42,11 +42,9 @@ router.post("/create", async (req, res) => {
 });
 
 router.put("/update", (req, res) => {
-  const { paymentId } = req.body;
-
   axios
     .get(
-      `https://latin-eloboost-api.herokuapp.com/api/mercadopago/${paymentId}`
+      `https://latin-eloboost-api.herokuapp.com/api/mercadopago/${req.body.paymentId}`
     )
     .then(async (response) => {
       const payment = response.data;
@@ -54,6 +52,7 @@ router.put("/update", (req, res) => {
       const updatedOrder = await Order.findByIdAndUpdate(paymentId, {
         status: payment.status,
       });
+      console.log(updatedOrder);
       res.sendStatus(200);
     });
 });
