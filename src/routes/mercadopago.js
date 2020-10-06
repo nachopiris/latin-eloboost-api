@@ -1,23 +1,36 @@
 const { Router } = require("express");
 const mercadopago = require("mercadopago");
+const axios = require("axios");
+
+const mpAccessToken =
+  "APP_USR-6598461348116788-092518-7155868d5ab76566022e9a4fc6413bf0-651261130";
 
 const router = Router();
 
 mercadopago.configure({
-  access_token:
-    "APP_USR-1473567962389678-092515-3ae6ae1cfb6a00ff49005474c76e49ca-197123651",
+  access_token: mpAccessToken,
+});
+
+router.get("/payment/:prefId", (req, res) => {
+  axios
+    .get(
+      `https://api.mercadopago.com/checkout/preferences/${req.params.prefId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${mpAccessToken}`,
+        },
+      }
+    )
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((err) => {
+      res.json({ error: { message: err, status: 500 } }).status(500);
+    });
 });
 
 router.post("/payment/new", (req, res) => {
-  const {
-    productName,
-    productDescription,
-    price,
-    unit,
-    firstName,
-    lastName,
-    email,
-  } = req.body;
+  const { productName, productDescription, price, unit, email } = req.body;
   let preference = {
     items: [
       {
@@ -28,20 +41,15 @@ router.post("/payment/new", (req, res) => {
       },
     ],
     payer: {
-      name: firstName,
-      surname: lastName,
       email: email,
-      phone: {},
-      identification: {},
-      address: {},
     },
   };
 
   mercadopago.preferences
     .create(preference)
     .then((response) => {
-      const url = response.body.init_point;
-      res.send(url).status(200);
+      const init_point = response.body.init_point;
+      res.send(init_point).status(200);
     })
     .catch((error) => {
       res.send(error).status(500);
