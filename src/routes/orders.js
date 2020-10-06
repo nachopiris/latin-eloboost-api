@@ -48,14 +48,11 @@ router.put("/update", (req, res) => {
     )
     .then(async (response) => {
       const payment = response.data;
-      console.log(payment);
-      const updatedOrder = await Order.findByIdAndUpdate(
-        payment.external_reference,
-        {
-          status: payment.status,
-        }
-      );
-      console.log(updatedOrder);
+      const order = await Order.findById(payment.external_reference);
+      if (order) {
+        order.status = payment.status;
+        await order.save();
+      }
       res.sendStatus(200);
     });
 });
