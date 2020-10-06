@@ -55,9 +55,7 @@ router.post("/update", (req, res) => {
         { status: payment.status }
       );
       console.log(updatedOrder);
-    })
-    .catch((error) => {
-      console.log(error);
+      res.sendStatus(200);
     });
 });
 

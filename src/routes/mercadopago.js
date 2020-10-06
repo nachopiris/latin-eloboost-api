@@ -44,8 +44,12 @@ router.get("/:paymentId", (req, res) => {
     });
 });
 
-router.post("/notification", (req, res) => {
+router.post("/notification", async (req, res) => {
   const paymentId = req.query.payment;
+  await axios.put(
+    "https://latin-eloboost-api.herokuapp.com/api/orders/update",
+    { paymentId }
+  );
   res.sendStatus(200);
 });
 
