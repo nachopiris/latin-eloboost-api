@@ -44,13 +44,15 @@ router.get("/:paymentId", (req, res) => {
     });
 });
 
-router.post("/notification", async (req, res) => {
+router.post("/notification", (req, res) => {
   const paymentId = req.query.payment;
-  await axios.put(
-    "https://latin-eloboost-api.herokuapp.com/api/orders/update",
-    { paymentId }
-  );
-  res.sendStatus(200);
+  axios
+    .put("https://latin-eloboost-api.herokuapp.com/api/orders/update", {
+      paymentId,
+    })
+    .then(() => {
+      res.sendStatus(200);
+    });
 });
 
 router.post("/preference", (req, res) => {
