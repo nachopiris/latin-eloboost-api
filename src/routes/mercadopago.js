@@ -11,7 +11,7 @@ mercadopago.configure({
   access_token: mpAccessToken,
 });
 
-router.get("/payment/:prefId", (req, res) => {
+router.get("/:prefId", (req, res) => {
   axios
     .get(
       `https://api.mercadopago.com/checkout/preferences/${req.params.prefId}`,
@@ -22,27 +22,48 @@ router.get("/payment/:prefId", (req, res) => {
       }
     )
     .then((response) => {
-      res.json(response.data);
+      res.send(response.data);
     })
-    .catch((err) => {
-      res.json({ error: { message: err, status: 500 } }).status(500);
+    .catch((error) => {
+      res.send(error).status(500);
     });
 });
 
-router.post("/payment/new", (req, res) => {
-  const { productName, productDescription, price, unit, email } = req.body;
+router.get("/:paymentId", (req, res) => {
+  axios
+    .get(`https://api.mercadopago.com/v1/payments/${req.params.paymentId}`, {
+      headers: {
+        Authorization: `Bearer ${mpAccessToken}`,
+      },
+    })
+    .then((response) => {
+      res.send(response.data);
+    })
+    .catch((error) => {
+      res.send(error).status(500);
+    });
+});
+
+router.post("/notification", async (req, res) => {
+  const paymentId = req.query.payment;
+  await axios.put(
+    "https://latin-eloboost-api.herokuapp.com/api/orders/update",
+    { paymentId }
+  );
+  res.sendStatus(200);
+});
+
+router.post("/preference", (req, res) => {
+  const { productName, price, unit, orderId } = req.body;
   let preference = {
     items: [
       {
         title: productName,
-        description: productDescription,
         unit_price: parseFloat(price),
         quantity: parseInt(unit),
       },
     ],
-    payer: {
-      email: email,
-    },
+    external_reference: orderId,
   };
 
   mercadopago.preferences

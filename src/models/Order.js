@@ -1,16 +1,18 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const orderSchema = new Schema({
+const OrderSchema = new Schema({
   type: String,
   toDo: String,
   summonerName: String,
   server: String,
+  email: String,
   date: { type: Date, default: Date.now },
   status: {
     type: String,
-    enum: ["payment_completed", "payment_pending", "in_process", "delivered"],
+    enum: ["created", "approved", "pending", "in_process", "delivered"],
+    default: "created",
   },
 });
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = mongoose.model("Order", OrderSchema);

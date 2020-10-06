@@ -1,17 +1,64 @@
-const { Router } = require("express");
+const { Router, response } = require("express");
 const axios = require("axios");
+const Order = require("../models/Order");
 
 const router = Router();
 
-router.post("/new", (req, res) => {
-  const data = {
-    id: req.query.id,
-    payment: req.query.topic,
-  };
+router.post("/create", async (req, res) => {
+  const {
+    productName,
+    summonerName,
+    section,
+    server,
+    price,
+    unit,
+    email,
+  } = req.body;
 
-  console.log(data);
+  const newOrder = await Order.create({
+    type: section,
+    toDo: productName,
+    summonerName,
+    server,
+    email,
+  });
 
-  res.sendStatus(200);
+  axios
+    .post(
+      "https://latin-eloboost-api.herokuapp.com/api/mercadopago/preference",
+      {
+        productName,
+        price,
+        unit,
+        orderId: newOrder.id,
+      }
+    )
+    .then((response) => {
+      res.send(response.data);
+    })
+    .catch((error) => {
+      res.send(error).status(500);
+    });
+});
+
+router.post("/update", (req, res) => {
+  const paymentId = req.body;
+
+  axios
+    .get(
+      `https://latin-eloboost-api.herokuapp.com/api/mercadopago/${paymentId}`
+    )
+    .then(async (response) => {
+      const payment = response.data;
+      const updatedOrder = await Order.findOneAndUpdate(
+        { id: payment.external_reference },
+        { status: payment.status }
+      );
+      console.log(updatedOrder);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 module.exports = router;
