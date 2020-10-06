@@ -11,7 +11,7 @@ mercadopago.configure({
   access_token: mpAccessToken,
 });
 
-router.get("/:prefId", (req, res) => {
+router.get("/preference/:prefId", (req, res) => {
   axios
     .get(
       `https://api.mercadopago.com/checkout/preferences/${req.params.prefId}`,
@@ -29,7 +29,7 @@ router.get("/:prefId", (req, res) => {
     });
 });
 
-router.get("/:paymentId", (req, res) => {
+router.get("/payment/:paymentId", (req, res) => {
   axios
     .get(`https://api.mercadopago.com/v1/payments/${req.params.paymentId}`, {
       headers: {
