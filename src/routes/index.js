@@ -1,11 +1,11 @@
 const { Router } = require("express");
-const summonerRouter = require("./summonerLeague.js");
+const riotRouter = require("./riot.js");
 const mercadopagoRouter = require("./mercadopago.js");
 const ordersRouter = require("./orders.js");
 
 const router = Router();
 
-router.use("/summoner-league", summonerRouter);
+router.use("/riot", riotRouter);
 router.use("/mercadopago", mercadopagoRouter);
 router.use("/orders", ordersRouter);
 

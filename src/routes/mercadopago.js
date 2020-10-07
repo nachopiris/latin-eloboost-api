@@ -2,8 +2,7 @@ const { Router } = require("express");
 const mercadopago = require("mercadopago");
 const axios = require("axios");
 
-const mpAccessToken =
-  "APP_USR-6598461348116788-092518-7155868d5ab76566022e9a4fc6413bf0-651261130";
+const mpAccessToken = process.env.MP_ACCESS_TOKEN;
 
 const router = Router();
 
