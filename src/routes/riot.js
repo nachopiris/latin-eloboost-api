@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const router = Router();
 
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.RIOT_API_KEY;
 
 router.post("/position", (req, res) => {
   const { name, server } = req.body;
